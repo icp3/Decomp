@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Decomp1
 {
-    class Classe
+    class Classe : GroupBox
     {
         readonly List<ConstructorButton> Cons;
 
@@ -28,30 +28,39 @@ namespace Decomp1
                 else
                     Priv.Add(new TabAction(Meth));
             }
+            Height = (Cons.Count + Func.Count + Priv.Count) * 10;
+            Text = Value.Name;
         }
 
-        public void LoadBut(ref TabPage Tabby, int y = 0)
+        public Classe LoadButs( int y = 0, int y_default = 10)
         {
-            LoadCons(ref Tabby, y);
-            LoadFunc(ref Tabby, y);
+            LoadCons(ref y, y_default);
+            LoadFunc(ref y, y_default);
+            return this;
         }
 
-        public void LoadCons(ref TabPage Tabby, int y = 0)
+        public Classe LoadCons(ref int y, int y_default = 10)
         {
+            if( y == 0)
+                Controls.Clear();
             foreach (var cons in Cons)
             {
-                cons.Load(ref Tabby, y);
-                y += 10;
+                Controls.Add(cons);
+                y += y_default;
             }
+            return this;
         }
 
-        public void LoadFunc(ref TabPage Tabby, int y = 0)
+        public Classe LoadFunc(ref int y, int y_default = 10)
         {
+            if (y == 0)
+                Controls.Clear();
             foreach (var func in Func)
             {
-                func.Load(ref Tabby, y);
-                y += 10;
+                func.Load( y);
+                y += y_default;
             }
+            return this;
         }
     }
 }

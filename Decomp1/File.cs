@@ -18,35 +18,47 @@ namespace Decomp1
 
         public Files(string Filename)
         {
-            Text = asm.Location.Substring(asm.Location.LastIndexOf('\\') + 1),
-            Height = 10,
+            Text = Filename.Substring(Filename.LastIndexOf('\\') + 1);
+            Height = 10;
             asm = Assembly.LoadFile(Filename);
-            TabPage tab = TabpageLayout();
             Classes = new List<Classe>();
 
             foreach (var typ in asm.GetModules())
                 Classes.Add(new Classe(typ));
         }
 
-
-
         public void LoadButs()
         {
-            foreach(var cla in Classes)
-                cla.LoadBut(ref this);
+            foreach (var cla in Classes)
+            {
+                cla.LoadButs();
+                Controls.Add(cla);
+            }
         }
 
 
-        public TabPage LoadCons()
+        public void LoadCons(int y = 10)
         {
             foreach (var cla in Classes)
-                cla.LoadCons(ref tab);
+            {
+                cla.LoadCons(ref y);
+                Controls.Add(cla);
+            }
         }
 
-        public TabPage LoadFunc()
+        public void LoadFunc(int y = 10)
         {
             foreach (var cla in Classes)
-                cla.LoadFunc(ref tab);
+            {
+                cla.LoadFunc(ref y);
+                Controls.Add(cla);
+            }
+            
+        }
+
+        public void UpdateSelected()
+        {
+            this.Update();
         }
     }
 }

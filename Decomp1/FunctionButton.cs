@@ -11,7 +11,6 @@ namespace Decomp1
 {
     class FunctionButton : TabAction
     {
-        readonly Label ReturnType;
 
         public FunctionButton Cons
         {
@@ -25,26 +24,15 @@ namespace Decomp1
             Arguments = new List<Argument>();
 
             Init = GetDefaultButton(Data.Name);
-            ReturnType = GetDefaultLabel(Value.ReturnType.ToString());
-        
+
+            var ReturnType = new Argument(Value.ReturnType.GetType());
 
             foreach (var Param in Data.GetParameters())
-            {
                 Arguments.Add(new Argument(Param));
-            }
 
+            foreach (var args in Arguments)
+                Controls.Add(args);
         }
 
-        protected override List<Control> GetLabel()
-        {
-            List<Control> ret = new List<Control> { ReturnType, Init};
-
-            foreach (Argument Arg in Arguments)
-            {
-                ret.AddRange(Arg.Load());
-            }
-
-            return ret;
-        }
     }
 }

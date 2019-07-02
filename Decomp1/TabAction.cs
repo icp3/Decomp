@@ -6,7 +6,7 @@ using System.Drawing;
 namespace Decomp1
 {
 
-    class TabAction : Module
+    class TabAction : GroupBox
     {
         protected MethodInfo Data;
 
@@ -32,22 +32,48 @@ namespace Decomp1
 
         }
 
-
-        protected virtual Label GetDefaultLabel(string Name)
+        protected virtual TextBox GetDefaultTextBox(string name, int x = 10, int y = 10)
         {
-            return new Label
+            return new TextBox
             {
-                Height = 10,
-                Text = Name,
+                Height = y,
+                Text = name,
+                Name = name,
+                Width = x,
+                Visible = true,
             };
         }
 
-        protected virtual Button GetDefaultButton(string Name)
+        protected virtual RadioButton GetDefaultRadioButton(string name, int y = 10)
+        {
+            return new RadioButton{
+                Height = y,
+                Text = name,
+                Name = name,
+                Visible = true,
+            };
+        }
+
+
+        protected virtual Label GetDefaultLabel(string name, int y = 10)
+        {
+            return new Label
+            {
+                Height = y,
+                Text = name,
+                Name = name,
+                Visible = true,
+            };
+        }
+
+        protected virtual Button GetDefaultButton(string name, int y = 10)
         {
             return new Button
             {
                 Height = 10,
-                Text = Name,
+                Text = name,
+                Name = name,
+                Visible = true,
             };
         }
 
@@ -55,16 +81,18 @@ namespace Decomp1
             return new List<Control> { Init };
         }
 
-        public virtual void Load(ref TabPage Tabby, int y)
+        public virtual List<Control> Load( int y)
         {
+            List<Control> ret = new List<Control>();
             int x = 0;
 
             foreach(var lab in GetLabel())
             {
                 lab.Location = new Point(x, y);
-                Tabby.Controls.Add(lab);
+                ret.Add(lab);
                 x += lab.Width;
             }
+            return ret;
         }
     }
 }

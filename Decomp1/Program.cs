@@ -17,9 +17,8 @@ namespace Decomp1
            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1 { Name = "Decomp", Text = "Decomp"});
-
-
+            Form1 form = new Form1 { Name = "Decomp", Text = "Decomp" };
+            Application.Run(form);
         }
     }
 }

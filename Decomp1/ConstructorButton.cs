@@ -18,16 +18,9 @@ namespace Decomp1
             {
                 Arguments.Add(new Argument(Param));
             }
-        }
 
-        protected override List<Control> GetLabel()  {
-            List<Control> ret = new List<Control> { Init };
-            foreach(Argument Arg in Arguments)
-            {
-                ret.AddRange(Arg.Load());
-            }
-
-            return ret;
+            foreach (var args in Arguments)
+                Controls.Add(args);
         }
     }
 }

@@ -1,0 +1,9 @@
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\bin\Debug\Decomp1.exe.config
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\obj\Debug\Decomp1.csprojResolveAssemblyReference.cache
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\obj\Debug\Decomp1.Form1.resources
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\obj\Debug\Decomp1.Properties.Resources.resources
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\obj\Debug\Decomp1.csproj.GenerateResource.Cache
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\bin\Debug\Decomp1.exe
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\bin\Debug\Decomp1.pdb
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\obj\Debug\Decomp1.exe
+C:\Users\icp3\Documents\Source\Decomp\Decomp1\obj\Debug\Decomp1.pdb

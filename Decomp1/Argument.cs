@@ -8,122 +8,133 @@ namespace Decomp1
 
     class Argument : TabAction
     {
-        enum TypeEnum
-        {
-            Double,
-            Integer,
-            String,
-            CharString,
-            Char,
-            Bool,
-            Null,
-        }
-        private readonly ParameterInfo Param;
 
-        private readonly Label Namer;
+        private readonly ParameterInfo Param;
 
         readonly List<RadioButton> Radior;
 
         readonly TextBox TextBoxy;
 
-        readonly TypeEnum what;
 
         public Argument(ParameterInfo Value)
         {
-            Namer = new Label();
-            Radior = new List<RadioButton>();
-            TextBoxy = new TextBox();
-            what = new TypeEnum();
             Param = Value;
+            Text = Param.Name;
             if (Param.ParameterType.IsValueType == true)
             {
-                int integer = 0;
-                if (Param.ParameterType == integer.GetType())
-                    what = TypeEnum.Integer;
-                char character = '0';
-                if (Param.ParameterType == character.GetType())
-                    what = TypeEnum.Char;
-                char[] chararray = { '0' };
-                if (Param.ParameterType == chararray.GetType())
-                    what = TypeEnum.CharString;
-                string stringvar = "";
-                if (Param.ParameterType == stringvar.GetType())
-                    what = TypeEnum.String;
-                double DoublePrecision = 0.0;
-                float SinglePrecision = 0.0F;
-                if (Param.ParameterType == DoublePrecision.GetType() || Param.ParameterType == SinglePrecision.GetType())
-                    what = TypeEnum.Double;
                 bool Boolean = true;
                 if (Param.ParameterType == Boolean.GetType())
-                    what = TypeEnum.Bool;
+                {
+                    Radior = new List<RadioButton>();
+                    Radior.Add(GetDefaultRadioButton("True"));
+                    Radior.Add(GetDefaultRadioButton("False"));
+                    foreach (var rad in Radior)
+                        Controls.Add(rad);
+                    return;
+                }
+                else
+                {
+                    int integer = 0;
+                    char character = '0';
+                    char[] chararray = { '0' };
+                    string stringvar = "";
+
+                    double DoublePrecision = 0.0;
+                    float SinglePrecision = 0.0F;
+                    if (Param.ParameterType == integer.GetType())
+                    {
+                        if (Param.HasDefaultValue == true)
+                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                        else
+                            TextBoxy = GetDefaultTextBox("0");
+                    }
+                    else if (Param.ParameterType == character.GetType())
+                    {
+                        if (Param.HasDefaultValue == true)
+                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString(), 1);
+                        else
+                            TextBoxy = GetDefaultTextBox("C");
+                    }
+                    else if (Param.ParameterType == chararray.GetType())
+                    {
+                        if (Param.HasDefaultValue == true)
+                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                        else
+                            TextBoxy = GetDefaultTextBox("CharString");
+                    }
+                    else if (Param.ParameterType == stringvar.GetType())
+                    {
+                        if (Param.HasDefaultValue == true)
+                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                        else
+                            TextBoxy = GetDefaultTextBox("String");
+                    }
+                    else if (Param.ParameterType == DoublePrecision.GetType() || Param.ParameterType == SinglePrecision.GetType())
+                    {
+                        if (Param.HasDefaultValue == true)
+                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                        else
+                            TextBoxy = GetDefaultTextBox("0.0");
+                    }
+                    else
+                    {
+                        Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
+                        return;
+                    }
+                    Controls.Add(TextBoxy);
+                }
+            }
+            else {
+                Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
+            }
+        }
+
+        public Argument(System.Type type)
+        {
+            if (type.IsValueType == true)
+            {
+                bool Boolean = true;
+                if (type == Boolean.GetType())
+                {
+                    Radior = new List<RadioButton>();
+                    Radior.Add(GetDefaultRadioButton("True"));
+                    Radior.Add(GetDefaultRadioButton("False"));
+                    foreach (var rad in Radior)
+                        Controls.Add(rad);
+                    return;
+                }
+                else
+                {
+
+                    int integer = 0;
+                    char character = '0';
+                    char[] chararray = { '0' };
+                    double DoublePrecision = 0.0;
+                    float SinglePrecision = 0.0F;
+                    string stringvar = "";
+
+                    if (type == integer.GetType())
+                        TextBoxy = GetDefaultTextBox("0");
+                    else if (type == character.GetType())
+                        TextBoxy = GetDefaultTextBox("C");
+                    else if (Param.ParameterType == chararray.GetType())
+                        TextBoxy = GetDefaultTextBox("CharString");
+                    else if (Param.ParameterType == stringvar.GetType())
+                        TextBoxy = GetDefaultTextBox("String");
+                    else if (Param.ParameterType == DoublePrecision.GetType() || Param.ParameterType == SinglePrecision.GetType())
+                        TextBoxy = GetDefaultTextBox("0.0");
+                    else
+                    {
+                        Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
+                        return;
+                    }
+                    Controls.Add(TextBoxy);
+                }
             }
             else
-                what = TypeEnum.Null;
-
-            CreateLayout();
-        }
-
-        void CreateLayout()
-        {
-            Namer.Text = Param.Name;
-            switch (what)
             {
-                case TypeEnum.Double:
-                    if (Param.HasDefaultValue == true)
-                        TextBoxy.Text = Param.DefaultValue.ToString();
-                    else
-                        TextBoxy.Text = "0.0";
-                    break;
-                case TypeEnum.Integer:
-                    if (Param.HasDefaultValue == true)
-                        TextBoxy.Text = Param.DefaultValue.ToString();
-                    else
-                        TextBoxy.Text = "0";
-                    break;
-                case TypeEnum.String:
-                    if (Param.HasDefaultValue == true)
-                        TextBoxy.Text = Param.DefaultValue.ToString();
-                    else
-                        TextBoxy.Text = "String";
-                    break;
-                case TypeEnum.CharString:
-                    if (Param.HasDefaultValue == true)
-                        TextBoxy.Text = Param.DefaultValue.ToString();
-                    else
-                        TextBoxy.Text = "CharString";
-                    break;
-                case TypeEnum.Char:
-                    if (Param.HasDefaultValue == true)
-                        TextBoxy.Text = Param.DefaultValue.ToString();
-                    else
-                        TextBoxy.Text = "C";
-                    break;
-                case TypeEnum.Bool:
-                    Radior.Add(new RadioButton());
-                    Radior[0].Name = "True";
-                    Radior.Add(new RadioButton());
-                    Radior[1].Name = "False";
-                    break;
-                case TypeEnum.Null:
-                    break;
+                Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
             }
-        }
-
-        public List<Control> Load()
-        {
-            List<Control> ret = new List<Control>();
-            switch (what)
-            {
-                default:
-                    ret.Add(Namer);
-                    ret.Add(TextBoxy);
-                    break;
-                case TypeEnum.Bool:
-                    ret.Add(Namer);
-                    ret.AddRange(Radior);
-                    break;
-            }
-            return ret;
         }
     }
 }
