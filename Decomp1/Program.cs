@@ -6,19 +6,41 @@ using System.Windows.Forms;
 
 namespace Decomp1
 {
-    static class Program
+    class Program
     {
+        static string[] InitialData()
+        {
+            OpenFileDialog dia = new OpenFileDialog()
+            {
+                Filter = "DLL Files(*.dll)|*.dll|Exe Files(*.exe)|*.exe",
+                InitialDirectory = @"c:\Users\" + Environment.UserName,
+                Multiselect = true
+            };
+
+            if (dia.ShowDialog() == DialogResult.OK)
+            {
+                return dia.FileNames;
+            }
+            return null;
+        }
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-           
-            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form1 form = new Form1 { Name = "Decomp", Text = "Decomp" };
+            string[] Files = Program.InitialData();
+
+            if (Files == null || Files.Length == 0)
+            {
+                return;
+            }
+            Application.EnableVisualStyles();
+            Form1 form = new Form1(Files) { Name = "Decomp", Text = "Decomp" };
             Application.Run(form);
         }
+
+
     }
 }

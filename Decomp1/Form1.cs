@@ -10,7 +10,7 @@ namespace Decomp1
 
         readonly TabControl Tabby;
 
-        public Form1()
+        public Form1(string[] Files)
         {
 
             this.Width = 800;
@@ -23,14 +23,6 @@ namespace Decomp1
                 Height = this.Height,
                 Width = this.Width,
             };
-        
-            string[] Files = InitialData();
-
-            if (Files == null || Files.Length == 0)
-            {
-                this.Close();
-                return;
-            }
 
             InitializeComponent();
 
@@ -53,20 +45,7 @@ namespace Decomp1
             this.Update();
         }
 
-        private string[] InitialData()
-        {
-            OpenFileDialog dia = new OpenFileDialog() {
-                Filter = "DLL Files(*.dll)|*.dll|Exe Files(*.exe)|*.exe",
-                InitialDirectory = @"c:\Users\" + Environment.UserName,
-                Multiselect = true
-            };
 
-            if (dia.ShowDialog() == DialogResult.OK)
-            {
-                return dia.FileNames;
-            }
-            return null;
-        }
 
 
     }
