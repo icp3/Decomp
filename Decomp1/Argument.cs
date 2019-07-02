@@ -11,13 +11,15 @@ namespace Decomp1
 
         private readonly ParameterInfo Param;
 
-        readonly List<RadioButton> Radior;
+        public readonly List<RadioButton> Radior;
 
-        readonly TextBox TextBoxy;
+        public readonly List<TextBox> TextBoxy;
 
 
         public Argument(ParameterInfo Value)
         {
+            Radior = new List<RadioButton>();
+            TextBoxy = new List<TextBox>();
             Param = Value;
             Text = Param.Name;
             if (Param.ParameterType.IsValueType == true)
@@ -44,44 +46,44 @@ namespace Decomp1
                     if (Param.ParameterType == integer.GetType())
                     {
                         if (Param.HasDefaultValue == true)
-                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                            TextBoxy.Add(GetDefaultTextBox(Param.DefaultValue.ToString()));
                         else
-                            TextBoxy = GetDefaultTextBox("0");
+                            TextBoxy.Add(GetDefaultTextBox("0"));
                     }
                     else if (Param.ParameterType == character.GetType())
                     {
                         if (Param.HasDefaultValue == true)
-                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString(), 1);
+                            TextBoxy.Add(GetDefaultTextBox(Param.DefaultValue.ToString(), 1));
                         else
-                            TextBoxy = GetDefaultTextBox("C");
+                            TextBoxy.Add(GetDefaultTextBox("C"));
                     }
                     else if (Param.ParameterType == chararray.GetType())
                     {
                         if (Param.HasDefaultValue == true)
-                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                            TextBoxy.Add(GetDefaultTextBox(Param.DefaultValue.ToString()));
                         else
-                            TextBoxy = GetDefaultTextBox("CharString");
+                            TextBoxy.Add(GetDefaultTextBox("CharString"));
                     }
                     else if (Param.ParameterType == stringvar.GetType())
                     {
                         if (Param.HasDefaultValue == true)
-                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                            TextBoxy.Add(GetDefaultTextBox(Param.DefaultValue.ToString()));
                         else
-                            TextBoxy = GetDefaultTextBox("String");
+                            TextBoxy.Add(GetDefaultTextBox("String"));
                     }
                     else if (Param.ParameterType == DoublePrecision.GetType() || Param.ParameterType == SinglePrecision.GetType())
                     {
                         if (Param.HasDefaultValue == true)
-                            TextBoxy = GetDefaultTextBox(Param.DefaultValue.ToString());
+                            TextBoxy.Add(GetDefaultTextBox(Param.DefaultValue.ToString()));
                         else
-                            TextBoxy = GetDefaultTextBox("0.0");
+                            TextBoxy.Add(GetDefaultTextBox("0.0"));
                     }
                     else
                     {
                         Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
                         return;
                     }
-                    Controls.Add(TextBoxy);
+                    Controls.Add(TextBoxy[0]);
                 }
             }
             else {
@@ -89,8 +91,10 @@ namespace Decomp1
             }
         }
 
-        public Argument(System.Type type)
+        public Argument(Type type)
         {
+            Radior = new List<RadioButton>();
+            TextBoxy = new List<TextBox>();
             if (type.IsValueType == true)
             {
                 bool Boolean = true;
@@ -114,26 +118,27 @@ namespace Decomp1
                     string stringvar = "";
 
                     if (type == integer.GetType())
-                        TextBoxy = GetDefaultTextBox("0");
+                        TextBoxy.Add(GetDefaultTextBox("0"));
                     else if (type == character.GetType())
-                        TextBoxy = GetDefaultTextBox("C");
-                    else if (Param.ParameterType == chararray.GetType())
-                        TextBoxy = GetDefaultTextBox("CharString");
-                    else if (Param.ParameterType == stringvar.GetType())
-                        TextBoxy = GetDefaultTextBox("String");
-                    else if (Param.ParameterType == DoublePrecision.GetType() || Param.ParameterType == SinglePrecision.GetType())
-                        TextBoxy = GetDefaultTextBox("0.0");
+                        TextBoxy.Add(GetDefaultTextBox("C"));
+                    else if (type == chararray.GetType())
+                        TextBoxy.Add(GetDefaultTextBox("CharString"));
+                    else if (type == stringvar.GetType())
+                        TextBoxy.Add(GetDefaultTextBox("String"));
+                    else if (type == DoublePrecision.GetType() || type == SinglePrecision.GetType())
+                        TextBoxy.Add(GetDefaultTextBox("0.0"));
                     else
                     {
-                        Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
+                        Controls.Add(GetDefaultLabel("void"));
                         return;
                     }
-                    Controls.Add(TextBoxy);
+                    Controls.Add(TextBoxy[0]);
                 }
             }
             else
             {
-                Controls.Add(GetDefaultLabel(Param.ParameterType.ToString()));
+                if(Param != null)
+                    Controls.Add(GetDefaultLabel(Param.ToString()));
             }
         }
     }

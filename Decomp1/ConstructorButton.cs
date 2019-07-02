@@ -19,8 +19,6 @@ namespace Decomp1
                 Arguments.Add(new Argument(Param));
             }
 
-            foreach (var args in Arguments)
-                Controls.Add(args);
         }
     }
 }

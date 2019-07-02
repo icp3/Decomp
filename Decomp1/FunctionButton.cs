@@ -11,6 +11,7 @@ namespace Decomp1
 {
     class FunctionButton : TabAction
     {
+        public readonly List<Argument> RetType;
 
         public FunctionButton Cons
         {
@@ -20,18 +21,18 @@ namespace Decomp1
 
         public FunctionButton(MethodInfo Value)
         {
+            RetType = new List<Argument>();
+
             Data = Value;
             Arguments = new List<Argument>();
 
             Init = GetDefaultButton(Data.Name);
 
-            var ReturnType = new Argument(Value.ReturnType.GetType());
+
+            RetType.Add(new Argument(Value.ReturnType));
 
             foreach (var Param in Data.GetParameters())
                 Arguments.Add(new Argument(Param));
-
-            foreach (var args in Arguments)
-                Controls.Add(args);
         }
 
     }

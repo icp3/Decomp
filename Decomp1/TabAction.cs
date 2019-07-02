@@ -8,11 +8,11 @@ namespace Decomp1
 
     class TabAction : GroupBox
     {
-        protected MethodInfo Data;
+        public MethodInfo Data;
 
-        protected List<Argument> Arguments;
+        public List<Argument> Arguments;
 
-        protected Button Init;
+        public Button Init;
 
         public Module Mod
         {

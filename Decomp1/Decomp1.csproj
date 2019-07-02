@@ -50,6 +50,9 @@
     <Compile Include="Argument.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Class.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ConstructorButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -65,9 +68,7 @@
     <Compile Include="FunctionButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classe.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Classe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabAction.cs">
