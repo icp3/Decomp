@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Runtime;
+using System.ComponentModel;
+using System.IO;
+using System.Threading;
 
 namespace Decomp1
 {

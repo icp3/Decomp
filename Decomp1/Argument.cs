@@ -18,6 +18,7 @@ namespace Decomp1
 
         public Argument(ParameterInfo Value)
         {
+            Width = Default_Width;
             Radior = new List<RadioButton>();
             TextBoxy = new List<TextBox>();
             Param = Value;
@@ -93,6 +94,7 @@ namespace Decomp1
 
         public Argument(Type type)
         {
+            Width = Default_Width;
             Radior = new List<RadioButton>();
             TextBoxy = new List<TextBox>();
             if (type.IsValueType == true)

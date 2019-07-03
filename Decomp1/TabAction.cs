@@ -8,6 +8,8 @@ namespace Decomp1
 
     class TabAction : GroupBox
     {
+        protected const int Default_Width = 150;
+
         public MethodInfo Data;
 
         public List<Argument> Arguments;
@@ -22,8 +24,13 @@ namespace Decomp1
 
             Arguments = new List<Argument>();
 
-            Init = GetDefaultButton(Data.Name);
-
+            Init = new Button
+            {
+                Height = 10,
+                Text = Data.Name,
+                Name = Data.Name,
+                Visible = true,
+            };
         }
 
         protected static TextBox GetDefaultTextBox(string name, int x = 10, int y = 10)

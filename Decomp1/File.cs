@@ -12,16 +12,22 @@ namespace Decomp1
 
         public readonly Assembly Asm;
 
-        public readonly List<Classe> NumOfClasses;
+        public List<Class> NumOfClasses;
 
         public Files(string filename)
         {
             Asm = Assembly.LoadFile(filename);
-            NumOfClasses = new List<Classe>();
-            Height = 10;
+            NumOfClasses = new List<Class>();
 
-            foreach (var typ in Asm.GetModules())
-                NumOfClasses.Add(new Classe(typ));
+            foreach (var typ in Asm.GetTypes())
+                NumOfClasses.Add(new Class(typ));
+
+            foreach (var cla in NumOfClasses)
+            {
+                Height += cla.Height;
+                if (cla.Width > Width)
+                    Width = cla.Width;
+            }
 
         }
     }

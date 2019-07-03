@@ -21,18 +21,28 @@ namespace Decomp1
 
         public FunctionButton(MethodInfo Value)
         {
+            Name = Value.Name;
+            Text = Value.Name;
+
             RetType = new List<Argument>();
 
             Data = Value;
             Arguments = new List<Argument>();
 
-            Init = GetDefaultButton(Data.Name);
-
+            Init = new Button
+            {
+                Height = 10,
+                Text = Data.Name,
+                Name = Data.Name,
+                Visible = true,
+            };
 
             RetType.Add(new Argument(Value.ReturnType));
 
             foreach (var Param in Data.GetParameters())
                 Arguments.Add(new Argument(Param));
+
+            Width = (RetType.Count * Default_Width) + Default_Width + (Arguments.Count * Default_Width);
         }
 
     }

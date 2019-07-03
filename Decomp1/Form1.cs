@@ -6,80 +6,91 @@ namespace Decomp1
 {
     public partial class Form1 : Form
     {
+        private List<Files> Data;
+
+        TabControl Tabby;
+
+
+
         public Form1(string[] files)
         {
             Name = "Decomp";
-            Width = 800;
-            Height = 800;
 
+            Data = new List<Files>();
+            Tabby = new TabControl();
 
-            List<Files> data = new List<Files>();
-            TabControl tabby = new TabControl();
+            Controls.Add(Tabby);
 
-            Controls.Add(tabby);
-
-            //tabby.Controls.Add(new TabPage { Text = "test" });
+            //Tabby.Controls.Add(new TabPage { Text = "test" });
 
             foreach (string file in files)
-                data.Add(new Files(file){Text = file.Substring(file.LastIndexOf('\\') + 1)});
+                Data.Add(new Files(file){Text = file.Substring(file.LastIndexOf('\\') + 1)});
 
-            int y_default = 20;
-            int x_default = 30;
+            foreach (var data in Data)
+            {
+                if (data.Width > Tabby.Width)
+                    Tabby.Width = data.Width;
+                Height += data.Height;
+            }
+            
 
-            foreach (Files fi in data){
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, System.EventArgs e)
+        {
+            int y_default = 25;
+            int x_default = 150;
+            foreach (Files fi in Data)
+            {
                 int initiallocation = 0;
                 foreach (var file in fi.NumOfClasses)
                 {
-                    
-                    foreach (var cla in file.Classes)
+
+                    file.Location = new Point(0, initiallocation);
+                    int classHeight = 0;
+
+                    foreach (var claFunc in file.Func)
                     {
-                        cla.Location = new Point(0, initiallocation);
-                        int classHeight = 0;
+                        classHeight += y_default;
+                        claFunc.Location = new Point(0, initiallocation + classHeight);
+                        int x = 0;
 
-                        foreach(var claFunc in cla.Func)
+                        foreach (var ret in claFunc.RetType)
                         {
-                            classHeight += y_default;
-                            claFunc.Location = new Point(0, initiallocation + classHeight);
-                            int width = 0;
-
-                            foreach (var ret in claFunc.RetType)
-                            {
-                                ret.Location = new Point(width, initiallocation + classHeight + y_default);
-                                claFunc.Controls.Add(ret);
-                                width += x_default;
-                            }
-
-                            claFunc.Init.Location= new Point(width,initiallocation + classHeight + y_default);
-                            claFunc.Controls.Add(claFunc.Init);
-                            width += x_default;
-                            foreach (var args in claFunc.Arguments)
-                            {
-                                args.Location = new Point(0, initiallocation + classHeight);
-                                foreach (var boolArgs in args.Radior)
-                                {
-                                    boolArgs.Location = new Point(width, initiallocation + classHeight + y_default);
-                                    claFunc.Controls.Add(boolArgs);
-                                    width += x_default;
-                                }
-                                foreach (var textArgs in args.TextBoxy)
-                                {
-                                    textArgs.Location = new Point(width, initiallocation + classHeight + y_default);
-                                    claFunc.Controls.Add(textArgs);
-                                    width += x_default;
-                                }
-                            }
-                            classHeight += y_default;
-                            cla.Controls.Add(claFunc);
+                            ret.Location = new Point(x, initiallocation + classHeight);
+                            claFunc.Controls.Add(ret);
+                            x += x_default;
                         }
-                        cla.Height = classHeight;
-                        initiallocation += classHeight;
-                        fi.Controls.Add(cla);
+
+                        claFunc.Init.Location = new Point(x, initiallocation + classHeight  );
+                        claFunc.Controls.Add(claFunc.Init);
+                        x += x_default;
+
+                        foreach (var args in claFunc.Arguments)
+                        {
+                            args.Location = new Point(0, initiallocation + classHeight);
+                            foreach (var boolArgs in args.Radior)
+                            {
+                                boolArgs.Location = new Point(x, initiallocation + classHeight );
+                                claFunc.Controls.Add(boolArgs);
+                                x += x_default;
+                            }
+                            foreach (var textArgs in args.TextBoxy)
+                            {
+                                textArgs.Location = new Point(x, initiallocation + classHeight );
+                                claFunc.Controls.Add(textArgs);
+                                x += x_default;
+                            }
+                        }
+                        classHeight += y_default;
+                        file.Controls.Add(claFunc);
                     }
+                    file.Height = classHeight;
+                    initiallocation += classHeight;                    
                 }
-                fi.Height = initiallocation;
-                tabby.Controls.Add(fi);
+                Tabby.Controls.Add(fi);
             }
-            InitializeComponent();
         }
     }
 }

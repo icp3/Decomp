@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using System.Windows.Forms;
 
 
 namespace Decomp1
@@ -11,7 +12,13 @@ namespace Decomp1
             Data = value;
             Arguments = new List<Argument>();
 
-            Init = GetDefaultButton(Data.Name);
+            Init = new Button
+            {
+                Height = 20,
+                Text = value.Name,
+                Name = value.Name,
+                Visible = true,
+            };
 
             foreach (var param in Data.GetParameters())
                 Arguments.Add(new Argument(param));
