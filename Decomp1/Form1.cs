@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -7,95 +6,79 @@ namespace Decomp1
 {
     public partial class Form1 : Form
     {
-        readonly List<Files> items;
-
-        readonly TabControl Tabby;
-
-        public Form1(string[] Files)
+        public Form1(string[] files)
         {
-            this.Width = 800;
-            this.Height = 800;
+            Name = "Decomp";
+            Width = 800;
+            Height = 800;
 
 
-            items = new List<Files>();
-            Tabby = new TabControl()
-            {
-                Height = this.Height,
-                Width = this.Width,
-            };
+            List<Files> data = new List<Files>();
+            TabControl tabby = new TabControl();
 
-            Controls.Add(Tabby);
+            Controls.Add(tabby);
 
-            //Tabby.Controls.Add(new TabPage { Text = "test" });
+            //tabby.Controls.Add(new TabPage { Text = "test" });
 
-            foreach (string file in Files)
-                items.Add(new Files(file));
+            foreach (string file in files)
+                data.Add(new Files(file){Text = file.Substring(file.LastIndexOf('\\') + 1)});
 
             int y_default = 20;
             int x_default = 30;
-            foreach (Files fi in items){
-                int Initial_location = 0;
+
+            foreach (Files fi in data){
+                int initiallocation = 0;
                 foreach (var file in fi.NumOfClasses)
                 {
                     
-                    foreach (var Cla in file.Classes)
+                    foreach (var cla in file.Classes)
                     {
-                        Cla.Location = new Point(0, Initial_location);
-                        int Class_Height = 0;
+                        cla.Location = new Point(0, initiallocation);
+                        int classHeight = 0;
 
-                        foreach(var ClaFunc in Cla.Func)
+                        foreach(var claFunc in cla.Func)
                         {
-                            Class_Height += y_default;
-                            ClaFunc.Location = new Point(0, Initial_location + Class_Height);
+                            classHeight += y_default;
+                            claFunc.Location = new Point(0, initiallocation + classHeight);
                             int width = 0;
 
-                            foreach (var ret in ClaFunc.RetType)
+                            foreach (var ret in claFunc.RetType)
                             {
-                                ret.Location = new Point(width, Initial_location + Class_Height + y_default);
-                                ret.Visible = true;
-                                ret.Height = y_default;
-                                ClaFunc.Controls.Add(ret);
+                                ret.Location = new Point(width, initiallocation + classHeight + y_default);
+                                claFunc.Controls.Add(ret);
                                 width += x_default;
                             }
 
-                            ClaFunc.Init.Height = 10;
-                            ClaFunc.Init.Visible = true;
-                            ClaFunc.Init.Location= new Point(width,Initial_location + Class_Height + y_default);
-                            ClaFunc.Controls.Add(ClaFunc.Init);
-                            foreach (var args in ClaFunc.Arguments)
+                            claFunc.Init.Location= new Point(width,initiallocation + classHeight + y_default);
+                            claFunc.Controls.Add(claFunc.Init);
+                            width += x_default;
+                            foreach (var args in claFunc.Arguments)
                             {
-                                args.Location = new Point(0, Initial_location + Class_Height);
-                                foreach (var BoolArgs in args.Radior)
+                                args.Location = new Point(0, initiallocation + classHeight);
+                                foreach (var boolArgs in args.Radior)
                                 {
-                                    BoolArgs.Location = new Point(width, Initial_location + Class_Height + y_default);
-                                    BoolArgs.Visible = true;
-                                    BoolArgs.Height = y_default;
-                                    ClaFunc.Controls.Add(BoolArgs);
+                                    boolArgs.Location = new Point(width, initiallocation + classHeight + y_default);
+                                    claFunc.Controls.Add(boolArgs);
                                     width += x_default;
                                 }
-                                foreach (var TextArgs in args.TextBoxy)
+                                foreach (var textArgs in args.TextBoxy)
                                 {
-                                    TextArgs.Location = new Point(width, Initial_location + Class_Height + y_default);
-                                    TextArgs.Visible = true;
-                                    TextArgs.Height = y_default;
-                                    ClaFunc.Controls.Add(TextArgs);
+                                    textArgs.Location = new Point(width, initiallocation + classHeight + y_default);
+                                    claFunc.Controls.Add(textArgs);
                                     width += x_default;
                                 }
                             }
-                            Class_Height += y_default;
-                            Cla.Controls.Add(ClaFunc);
+                            classHeight += y_default;
+                            cla.Controls.Add(claFunc);
                         }
-                        Cla.Height = Class_Height;
-                        Initial_location += Class_Height;
-                        fi.Controls.Add(Cla);
+                        cla.Height = classHeight;
+                        initiallocation += classHeight;
+                        fi.Controls.Add(cla);
                     }
                 }
-                fi.Height = Initial_location;
-                Tabby.Controls.Add(fi);
+                fi.Height = initiallocation;
+                tabby.Controls.Add(fi);
             }
-
-
-
             InitializeComponent();
         }
     }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime;
 
 namespace Decomp1
 {
@@ -12,7 +10,7 @@ namespace Decomp1
         {
             OpenFileDialog dia = new OpenFileDialog()
             {
-                Filter = "DLL Files(*.dll)|*.dll|Exe Files(*.exe)|*.exe",
+                Filter = "Exe Files(*.exe)|*.exe|DLL Files(*.dll)|*.dll",
                 InitialDirectory = @"c:\Users\" + Environment.UserName,
                 Multiselect = true
             };
@@ -30,17 +28,15 @@ namespace Decomp1
         static void Main()
         {
             Application.SetCompatibleTextRenderingDefault(false);
-            string[] Files = Program.InitialData();
+            string[] files = InitialData();
 
-            if (Files == null || Files.Length == 0)
+            if (files == null || files.Length == 0)
             {
                 return;
             }
             Application.EnableVisualStyles();
-            Form1 form = new Form1(Files) { Name = "Decomp", Text = "Decomp" };
+            var form = new Form1(files) {Name = "Decomp"};
             Application.Run(form);
         }
-
-
     }
 }

@@ -13,18 +13,12 @@ namespace Decomp1
         public List<Argument> Arguments;
 
         public Button Init;
-
-        public Module Mod
-        {
-            get { return Mod; }
-            private set { Mod = value; }
-        }
-
+        
         public TabAction() { }
 
-        public TabAction(MethodInfo Value)
+        public TabAction(MethodInfo value)
         {
-            Data = Value;
+            Data = value;
 
             Arguments = new List<Argument>();
 
@@ -32,7 +26,7 @@ namespace Decomp1
 
         }
 
-        protected virtual TextBox GetDefaultTextBox(string name, int x = 10, int y = 10)
+        protected static TextBox GetDefaultTextBox(string name, int x = 10, int y = 10)
         {
             return new TextBox
             {
@@ -44,7 +38,7 @@ namespace Decomp1
             };
         }
 
-        protected virtual RadioButton GetDefaultRadioButton(string name, int y = 10)
+        protected static RadioButton GetDefaultRadioButton(string name, int y = 10)
         {
             return new RadioButton{
                 Height = y,
@@ -55,7 +49,7 @@ namespace Decomp1
         }
 
 
-        protected virtual Label GetDefaultLabel(string name, int y = 10)
+        protected static Label GetDefaultLabel(string name, int y = 10)
         {
             return new Label
             {
@@ -66,7 +60,7 @@ namespace Decomp1
             };
         }
 
-        protected virtual Button GetDefaultButton(string name, int y = 10)
+        protected static Button GetDefaultButton(string name, int y = 10)
         {
             return new Button
             {
@@ -75,24 +69,6 @@ namespace Decomp1
                 Name = name,
                 Visible = true,
             };
-        }
-
-        protected virtual List<Control> GetLabel() {
-            return new List<Control> { Init };
-        }
-
-        public virtual List<Control> Load( int y)
-        {
-            List<Control> ret = new List<Control>();
-            int x = 0;
-
-            foreach(var lab in GetLabel())
-            {
-                lab.Location = new Point(x, y);
-                ret.Add(lab);
-                x += lab.Width;
-            }
-            return ret;
         }
     }
 }

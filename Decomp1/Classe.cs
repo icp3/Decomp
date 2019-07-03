@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Forms;
-using System;
-
+using System.Runtime;
 
 namespace Decomp1
 {
@@ -10,16 +8,12 @@ namespace Decomp1
     {
         public readonly List<Class> Classes;
 
-        public Classe(Module Value)
+        public Classe(Module value)
         {
             Classes = new List<Class>();
 
-            Type[] types = Value.GetTypes();
-
-            foreach (var Cla in types)
-            {
-                Classes.Add(new Class(Cla));
-            }
+            foreach (var cla in value.GetTypes())
+                Classes.Add(new Class(cla) {Text = cla.Name});
         }
     }
 }

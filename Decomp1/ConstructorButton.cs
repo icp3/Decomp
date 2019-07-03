@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Windows.Forms;
 
 
 namespace Decomp1
 {
     class ConstructorButton : TabAction
     {
-        public ConstructorButton(MethodInfo Value)
+        public ConstructorButton(MethodInfo value)
         {
-            Data = Value;
+            Data = value;
             Arguments = new List<Argument>();
 
             Init = GetDefaultButton(Data.Name);
 
-            foreach (var Param in Data.GetParameters())
-            {
-                Arguments.Add(new Argument(Param));
-            }
+            foreach (var param in Data.GetParameters())
+                Arguments.Add(new Argument(param));
 
         }
     }

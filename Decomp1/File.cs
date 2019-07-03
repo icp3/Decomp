@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -12,20 +10,19 @@ namespace Decomp1
     class Files : TabPage
     {
 
-        readonly Assembly asm;
+        public readonly Assembly Asm;
 
         public readonly List<Classe> NumOfClasses;
 
-        public Files(string Filename)
+        public Files(string filename)
         {
-            Text = Filename.Substring(Filename.LastIndexOf('\\') + 1);
-            asm = Assembly.LoadFile(Filename);
+            Asm = Assembly.LoadFile(filename);
             NumOfClasses = new List<Classe>();
+            Height = 10;
 
-            foreach (var typ in asm.GetModules())
+            foreach (var typ in Asm.GetModules())
                 NumOfClasses.Add(new Classe(typ));
 
-            Height = 10;
         }
     }
 }
